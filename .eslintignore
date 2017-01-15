@@ -2,3 +2,4 @@ node_modules/
 dev-server.js
 webpack.config.js
 postcss.config.js
+config/

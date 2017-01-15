@@ -62,6 +62,7 @@ module.exports = {
             {
                 test: /\.jsx?$|\.js?$/,
                 include: [path.join(__dirname, '../src')],
+                exclude: [/\.spec.js$/, /\.story.jsx$/],
                 loader: ['babel']
             },
             // Images

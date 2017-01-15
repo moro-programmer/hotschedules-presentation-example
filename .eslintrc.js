@@ -37,6 +37,17 @@ module.exports = {
     "rules": {
         'import/prefer-default-export': 'off',
         'react/prefer-stateless-function': 'warn',
+        'no-unused-expressions': [
+            'warn', {
+                allowShortCircuit: false,
+                allowTernary: false
+            }
+        ],
+        'import/no-extraneous-dependencies': [
+            'error', {
+                devDependencies: ['src/**/*.spec.js']
+            }
+        ],
         "quotes": [
             2,
             "single", {
@@ -63,7 +74,11 @@ module.exports = {
 
         // ESLint-plugin-React
         // https://github.com/yannickcr/eslint-plugin-react
-
+        'react/jsx-filename-extension': [
+            'error', {
+                extensions: ['.jsx', '.js']
+            }
+        ],
         "react/forbid-prop-types": [
             "error", {
                 "forbid": ["any"]

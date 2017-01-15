@@ -11,8 +11,12 @@ const ToggleLink = ({ active, text, ...rest }) => {
 
 
 ToggleLink.propTypes = {
-    active: PropTypes.bool.isRequired,
+    active: PropTypes.bool,
     text: PropTypes.string.isRequired
+};
+
+ToggleLink.defaultProps = {
+    active: false
 };
 
 export default CSSModules(ToggleLink, styles);
