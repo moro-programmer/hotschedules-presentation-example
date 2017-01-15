@@ -1,0 +1,20 @@
+{
+    "presets": [
+        ["es2015", {
+            "modules": false
+        }],
+        "react",
+        "stage-0"
+    ],
+    "env": {
+        "development": {
+            "presets": ["react-hmre"]
+        }
+    },
+    "plugins": [
+        "ramda",
+        "transform-runtime",
+        "transform-decorators-legacy",
+        "transform-flow-strip-types"
+    ]
+}
