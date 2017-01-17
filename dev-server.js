@@ -23,7 +23,7 @@ function log() {
 
 app.use(webpackDevMiddleware(compiler, {
     hot: true,
-    noInfo: false,
+    noInfo: true,
     publicPath: config.output.publicPath,
     stats: {
         colors: true

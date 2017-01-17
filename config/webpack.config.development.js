@@ -11,28 +11,26 @@ const GLOBALS = {
 };
 
 module.exports = merge(config, {
-    debug: true,
-    cache: true,
     devtool: 'inline-source-map',
     entry: {
-        application: [
-            'webpack-hot-middleware/client', './src/index.jsx'
-        ]
+        application: ['webpack-hot-middleware/client', './src/index.jsx']
     },
 
     plugins: [
-        new webpack.HotModuleReplacementPlugin(), new webpack.DefinePlugin(GLOBALS)
+        new webpack.LoaderOptionsPlugin({ minimize: false, debug: false, cache: true }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin(GLOBALS)
     ],
 
     module: {
-        loaders: [
+        rules: [
             // Sass + CSS Modules
             {
                 test: /\.module.scss$/,
                 include: [path.join(__dirname, '../src')],
-                loaders: [
-                    'style', {
-                        loader: 'css',
+                use: [
+                    'style-loader', {
+                        loader: 'css-loader',
                         query: {
                             modules: true,
                             sourceMap: true,
@@ -40,9 +38,9 @@ module.exports = merge(config, {
                             localIdentName: '[name]__[local]--[hash:base64:5]'
                         }
                     },
-                    'resolve-url',
-                    'postcss', {
-                        loader: 'sass',
+                    'resolve-url-loader',
+                    'postcss-loader', {
+                        loader: 'sass-loader',
                         query: {
                             outputStyle: 'expanded',
                             sourceMap: true
@@ -56,11 +54,11 @@ module.exports = merge(config, {
                 exclude: [
                     'node_modules/', /src\/.*.module.scss$/
                 ],
-                loaders: [
-                    'style',
-                    'css',
-                    'postcss', {
-                        loader: 'sass',
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader', {
+                        loader: 'sass-loader',
                         query: {
                             outputStyle: 'expanded',
                             sourceMap: true

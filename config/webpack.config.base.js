@@ -27,17 +27,8 @@ module.exports = {
     plugins: [
         new FlowtypePlugin(),
         // Shared code
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            filename: 'js/vendor.bundle.js',
-            minChunks: Infinity
-        }),
-        new StyleLintPlugin({
-            failOnError: false,
-            context: 'src',
-            files: '**/*.scss',
-            quiet: false
-        })
+        new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'js/vendor.bundle.js', minChunks: Infinity}),
+        new StyleLintPlugin({ failOnError: false, context: 'src', files: '**/*.scss', quiet: false, 'syntax': 'scss' })
     ],
 
     resolve: {
@@ -45,49 +36,48 @@ module.exports = {
     },
 
     module: {
-        preLoaders: [
+        rules: [
             {
                 test: /\.js$|\.jsx$/,
+                enforce:'pre',
                 exclude: /node_modules/,
-                loader: 'eslint'
-            }, {
-                test: /\.js$|\.jsx$/,
-                exclude: /node_modules/,
-                loader: 'flowtype'
-            }
-        ],
-
-        loaders: [
+                use: ['eslint-loader', 'flowtype-loader']
+            },
             // JavaScript / ES6
             {
                 test: /\.jsx?$|\.js?$/,
                 include: [path.join(__dirname, '../src')],
-                exclude: [/\.spec.js$/, /\.story.jsx$/],
-                loader: ['babel']
+                exclude: [
+                    /\.spec.js$/, /\.story.jsx$/
+                ],
+                use: 'babel-loader'
             },
             // Images
             // Inline base64 URLs for <=8k images, direct URLs for the rest
             {
                 test: /\.(png|jpg|jpeg|gif|svg)$/,
-                loader: 'url',
-                query: {
-                    limit: 8192,
-                    name: 'images/[name].[ext]?[hash]'
+                use: [
+                    {
+                        loader: 'url-loader',
+                        query: {
+                            limit: 8192,
+                            name: 'images/[name].[ext]?[hash]'
+                        }
+                    }]
+                },
+                // Fonts
+                {
+                    test: /\.(woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+                    use: [
+                        {
+                            loader: 'url-loader',
+                            query: {
+                                limit: 8192,
+                                name: 'fonts/[name].[ext]?[hash]'
+                            }
+                        }
+                    ]
                 }
-            },
-            // Fonts
-            {
-                test: /\.(woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-                loader: 'url',
-                query: {
-                    limit: 8192,
-                    name: 'fonts/[name].[ext]?[hash]'
-                }
-            }
-        ]
-    },
-
-    postcss() {
-        return [autoprefixer({ browsers: ['last 2 versions'] }), postcssReporter()];
-    }
-};
+            ]
+        }
+    };
