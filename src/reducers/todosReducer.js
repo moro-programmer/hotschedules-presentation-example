@@ -1,12 +1,26 @@
+/* @flow */
 import { List, Map } from 'immutable';
 import { SHOW_ALL } from '../constants/filters';
+
+type State = {
+    visibilityFilter: string,
+    items: List<Map<string, any>>
+};
+
+type Action = {
+    type: string,
+    text?: string,
+    completed?: boolean,
+    id?: number,
+    filter?: string
+};
 
 const defaultState = {
     visibilityFilter: SHOW_ALL,
     items: List()
 };
 
-export default function config(state = defaultState, action = {}) {
+export default function config(state: State = defaultState, action: Action = { type: '' }): State {
     switch (action.type) {
     case 'TODO:ADD':
         return Object.assign({}, state, {
