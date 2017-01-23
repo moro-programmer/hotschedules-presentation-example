@@ -17,9 +17,8 @@ module.exports = merge(config, {
     },
     plugins: [
         new webpack.LoaderOptionsPlugin({ debug: false}),
-        new webpack.NoErrorsPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         new webpack.DefinePlugin(GLOBALS),
-        new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
