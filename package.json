@@ -7,6 +7,7 @@
     "precommit": "npm test",
     "prepush": "npm test",
     "test": "cross-env NODE_ENV=test mocha-webpack --require ./config/mocha.setup.js --webpack-config ./config/webpack.config.test.js \"src/**/*.spec.js\"",
+    "test:watch": "npm run test -- --watch",
     "coverage": "cross-env NODE_ENV=test nyc mocha-webpack --require ./config/mocha.setup.js --webpack-config ./config/webpack.config.test.js \"src/**/*.spec.js\"",
     "start": "cross-env NODE_ENV=development webpack-dashboard -c cyan -- node dev-server.js",
     "build": "cross-env NODE_ENV=production webpack --config ./config/webpack.config.production.js --progress"
